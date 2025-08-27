@@ -4,15 +4,20 @@
 This repository provides the algorithms for synthetic data generation described in *"Synthetic data-driven AI approach for fetal chromosomal aneuploidies detection"* by Hwang *et al.* (2025).
 
 ## Environment Setup
-- Bowtie2 version: 2.4
-- samtools version: 1.18
+- OS: Ubuntu 22.04.4 LTS
+- The following script installs the required dependencies **bowtie2** and **samtools**:
+
+  ```bash
+  sudo apt-get update
+  sudo apt-get install -y bowtie2 samtools
+  ```
 - Python version: 3.11
 - Required Libraries:
   ```
   pandas==2.2.3
   numpy==1.23.5
   ```
-- Install the required libraries using:
+- Install the required python libraries using:
   ```
   pip install -r requirements.txt
   ```

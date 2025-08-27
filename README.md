@@ -8,3 +8,9 @@
 5. **Remove duplicate reads** using `samtools rmdup -s` (single-end mode)  
 6. **Filter** for *uniquely mapped reads* and save them into the final `.unique` file  
 7. For multiple samples, generate a `.unique` file for each sample, and **record the fetal fraction (FF) and GC content values** for each through a separate process  
+
+## Generating Synthetic ACA (Trisomy) Dataset
+- Refer to the implementation and annotations within the `make_synthetic_ACA.py` script
+
+## Generating Synthetic SCA Dataset
+- Refer to the implementation and annotations within the `make_synthetic_SCA.py` script 

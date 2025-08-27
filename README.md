@@ -12,6 +12,11 @@ This repository provides the algorithms for synthetic data generation described 
   pandas==2.2.3
   numpy==1.23.5
   ```
+- Install the required libraries using:
+  ```
+  pip install -r requirements.txt
+  ```
+
 ## Preparing Input Data
 1. **Prepare** multiple single-end `.Fastq` files generated from NIPT sequencing, which will be used for synthetic data generation 
 2. **Trim** single-end `.Fastq` data to the first 35 nucleotides  

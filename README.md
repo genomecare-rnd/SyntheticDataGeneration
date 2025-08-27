@@ -5,4 +5,4 @@
 2. Align trimmed reads to the hg19 reference index using Bowtie2
 3. Convert SAM to BAM, then sort and index the alignment files
 4. Remove duplicate reads using samtools rmdup -s (single-end mode)
-5. Filter out only uniquely mapped reads and save them into the final .unique file
+5. Filter out only uniquely mapped reads and save them into the final *.unique* file

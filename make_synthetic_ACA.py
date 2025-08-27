@@ -1,15 +1,14 @@
 #!/home/albatross/anaconda3/bin/python3
 # -*- coding: utf-8 -*-
 """
-논문 표기와 변수명을 일치
 - TRC  : Total Read Count
-- FF_snp: SNP 기반 Fetal Fraction (기존 snp_ff)
-- XY_sample_df: 기존 unique_file
-- ACA_ref_df / Y_ref_df: 참조 풀
+- FF_snp: SNP-based Fetal Fraction
+- XY_sample_df: Dataframe for unique_file
+- ACA_ref_df / Y_ref_df: reference for ACA Data Generation(.unique file)
 - C_yRC' (beta0 + beta1 * TRC), C_yRC (= C_yRC' + ε, ε~N(0, σ^2))
-- 식 (1) ACA: T_iRC = C_iRC + (C_iRC * FF / 2)
-- 식 (3) XO : C_XRC = C_XYRC - C_YRC + C_yRC
-- 식 (4) XYY: C_XYYRC = C_XYRC + C_YRC - C_yRC  (아래 구현은 '추가만' 근사, 원 코드 유지)
+- Equation (1) ACA: T_iRC = C_iRC + (C_iRC * FF / 2)
+- Equation (3) XO : C_XRC = C_XYRC - C_YRC + C_yRC
+- Equation (4) XYY: C_XYYRC = C_XYRC + C_YRC - C_yRC
 """
 import sys
 import numpy as np
@@ -20,7 +19,7 @@ import pandas as pd
 # 300kb bin 정의(딕셔너리 + 루프로 간결화)
 # ───────────────────────────────────────────────────────────
 BIN_SIZE = 300_000
-# 각 chr 말단 좌표(포함)
+# chr location with terminal
 CHR_END = {
     1: 249_300_000,  2: 243_300_000,  3: 198_300_000,  4: 191_400_000,
     5: 181_200_000,  6: 171_300_000,  7: 159_300_000,  8: 146_400_000,
@@ -34,7 +33,7 @@ cnv_chr_range = {i: list(np.arange(0, CHR_END[i] + 1, BIN_SIZE)) for i in range(
 
 
 # ───────────────────────────────────────────────────────────
-# 유틸: 300kb 구간 카운트 & chr_* 컬럼명 생성
+# 유틸: 300kb Region count & generationg chr_* column name
 # ───────────────────────────────────────────────────────────
 def count_bins(df: pd.DataFrame) -> list:
     counts = []
@@ -169,30 +168,30 @@ if __name__ == "__main__":
 
     file_names = files[1]
 
-    # 경로
+    # Setting Diretory
     working_dir = '/BiO/snp_imp/jeong/test/'
     output_dir = '/BiO/snp_imp/jeong/test/'
 
-    # FF_snp (기존 snp_ff)
+    # Loading FF_snp
     FF_snp = float(file_names.split('_')[-2])
 
-    # 원시 unique 리드 로드
+    # Load Reads info from .unique file 
     XY_sample_df = pd.read_table(working_dir + file_names + '.unique', header=None)
     XY_sample_df = XY_sample_df[[2, 3, 9]]
     XY_sample_df.columns = ['Chr', 'Pos', 'Seq']
 
-    # GC/길이 계산
+    # Calculating GC Contents / Read Count
     XY_sample_df["GC"] = XY_sample_df["Seq"].apply(lambda x: x.count("G") + x.count("C"))
     XY_sample_df["Total"] = XY_sample_df["Seq"].apply(len)
     Sample_GC = XY_sample_df["GC"].sum() / XY_sample_df["Total"].sum()
 
-    # chrX/Y → chr23/24 통일
+    # chrX/Y → chr23/24
     XY_sample_df['Chr'] = XY_sample_df['Chr'].replace(['chrX', 'chrY'], ['chr23', 'chr24'])
 
     # TRC
     TRC = XY_sample_df.shape[0]
-    # ATRC: autosomes 총 리드 수
+    # ATRC: Total Read Count of Autosomes
     ATRC = XY_sample_df[(XY_sample_df['Chr'] != 'chr23') & (XY_sample_df['Chr'] != 'chr24')].shape[0]
 
-    # 필요 함수 호출
+    # Fuction Calling
     make_ACA()

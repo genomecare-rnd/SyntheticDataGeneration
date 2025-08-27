@@ -28,7 +28,7 @@ CHR_END = {
     17:  81_300_000, 18:  78_300_000, 19:  59_400_000, 20:  63_300_000,
     21:  48_300_000, 22:  51_600_000, 23: 155_400_000, 24:  59_400_000,
 }
-# chr별 bin 경계 리스트(우측 경계 포함 위해 +1)
+# chr bin boundary lists
 cnv_chr_range = {i: list(np.arange(0, CHR_END[i] + 1, BIN_SIZE)) for i in range(1, 25)}
 
 

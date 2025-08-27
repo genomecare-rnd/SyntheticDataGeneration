@@ -3,6 +3,11 @@
 ## Introduction
 This repository provides the algorithms for synthetic data generation described in *"Synthetic data-driven AI approach for fetal chromosomal aneuploidies detection"* by Hwang *et al.* (2025).
 
+## Version Information
+- Bowtie2: 2.4
+- samtools: 1.18
+- Python: 3.11
+
 ## Preparing Input Data
 1. **Prepare** multiple single-end `.Fastq` files generated from NIPT sequencing, which will be used for synthetic data generation 
 2. **Trim** single-end `.Fastq` data to the first 35 nucleotides  
